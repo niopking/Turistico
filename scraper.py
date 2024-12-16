@@ -36,7 +36,7 @@ def scrape():
             output+=image_url+","
         except Exception as e:
             print(f"Error: {e}")
-        return output
+    return output
 
     driver.quit()
 

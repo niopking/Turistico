@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.chrome.options import Options
 from flask import Flask, jsonify, request
 
 app = Flask(__name__)
@@ -16,7 +17,12 @@ def scrape():
     output = ""
     inputi = request.args.get('param', default="Nista", type=str)
 
-    driver = webdriver.Chrome()
+    chrome_options = Options()
+    chrome_options.add_argument("--headless")  # Run in headless mode
+    chrome_options.add_argument("--disable-gpu")  # Required for headless mode
+    chrome_options.add_argument("--no-sandbox")  # Bypass OS security model
+    chrome_options.add_argument("--disable-dev-shm-usage") 
+    driver = webdriver.Chrome(options=chrome_options)
     wait = WebDriverWait(driver, timeout=5, poll_frequency=1)
 
     search_term = inputi.split(",")
@@ -36,6 +42,7 @@ def scrape():
             output+=image_url+","
         except Exception as e:
             print(f"Error: {e}")
+    driver.quit()
     return output
 
     driver.quit()

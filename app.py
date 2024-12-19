@@ -1,6 +1,8 @@
 from flask import Flask, request
 import requests
 from bs4 import BeautifulSoup
+from geopy.geocoders import Nominatim
+import openrouteservice
 
 app = Flask(__name__)
 
@@ -41,6 +43,35 @@ def scrape():
             continue
 
     return output
+
+@app.route('/coord')
+def coord():
+    prompt = request.args.get('prompt', default="Nista", type=str)
+    prompt = prompt.split("QQ")
+    start = prompt[0].split("_")
+    start1 = start[0]
+    start2 = start[1]
+    prompt = prompt[1:len(prompt)]
+    result  = [start1,start2]
+    for p in prompt:
+        geolocator = Nominatim(user_agent="coordinate_finder")
+        location = geolocator.geocode(p)
+        if location:
+            result.append(str(location.latitude))
+            result.append(str(location.longitude))
+        else:
+            pass
+
+    api_key = "5b3ce3597851110001cf624832cfe3428fcd436eac293a329bb4a384"
+    result2 = []
+    for i in range(int(len(result)/2)-1):
+        print(result[2 * i] , result[2 * i+1])
+        client = openrouteservice.Client(key=api_key)
+        route = client.directions(coordinates=[(float(result[2 * i+1]), float(result[2 * i])) ,(float(result[2 * i+3]), float(result[2 * i + 2]))  ], profile='driving-car', format='geojson')
+        for one in route['features'][0]['geometry']['coordinates']:
+            result2.append(one)
+
+    return result2
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=4000)

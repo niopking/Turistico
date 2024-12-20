@@ -62,14 +62,14 @@ def coord():
         else:
             pass
 
-    # api_key = "5b3ce3597851110001cf624832cfe3428fcd436eac293a329bb4a384"
-    # result2 = []
-    # for i in range(int(len(result)/2)-1):
-    #     print(result[2 * i] , result[2 * i+1])
-    #     client = openrouteservice.Client(key=api_key)
-    #     route = client.directions(coordinates=[(float(result[2 * i+1]), float(result[2 * i])) ,(float(result[2 * i+3]), float(result[2 * i + 2]))  ], profile='driving-car', format='geojson')
-    #     for one in route['features'][0]['geometry']['coordinates']:
-    #         result2.append(one)
+    api_key = "5b3ce3597851110001cf624832cfe3428fcd436eac293a329bb4a384"
+    result2 = []
+    for i in range(int(len(result)/2)-1):
+        print(result[2 * i] , result[2 * i+1])
+        client = openrouteservice.Client(key=api_key)
+        route = client.directions(coordinates=[(float(result[2 * i+1]), float(result[2 * i])) ,(float(result[2 * i+3]), float(result[2 * i + 2]))  ], profile='driving-car', format='geojson')
+        for one in route['features'][0]['geometry']['coordinates']:
+            result2.append(one)
 
     return result
 

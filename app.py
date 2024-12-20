@@ -54,12 +54,15 @@ def coord():
     prompt = prompt[1:len(prompt)]
     result  = [start1,start2]
     for p in prompt:
-        geolocator = Nominatim(user_agent="coordinate_finder")
-        location = geolocator.geocode(p)
-        if location:
-            result.append(str(location.latitude))
-            result.append(str(location.longitude))
-        else:
+        try:
+            geolocator = Nominatim(user_agent="coordinate_finder")
+            location = geolocator.geocode(p)
+            if location:
+                result.append(str(location.latitude))
+                result.append(str(location.longitude))
+            else:
+                pass
+        finally:
             pass
 
     api_key = "5b3ce3597851110001cf624832cfe3428fcd436eac293a329bb4a384"

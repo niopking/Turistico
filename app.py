@@ -48,13 +48,7 @@ def scrape():
 def locate():
     prompt = request.args.get('names', default="Nista", type=str)
     prompt = prompt.split("QQ")
-    start = prompt[0].split("_")
-    start1 = start[0]
-    start2 = start[1]
-    orig = float(start[0])
-    orig2 = float(start[1])
-    prompt = prompt[1:len(prompt)]
-    result  = [start1,start2]
+    result  = []
     for p in prompt:
         try:
             geolocator = Nominatim(user_agent="coordinate_finder")

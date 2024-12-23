@@ -44,9 +44,9 @@ def scrape():
 
     return output
 
-@app.route('/coord')
-def coord():
-    prompt = request.args.get('prompt', default="Nista", type=str)
+@app.route('/locate')
+def locate():
+    prompt = request.args.get('names', default="Nista", type=str)
     prompt = prompt.split("QQ")
     start = prompt[0].split("_")
     start1 = start[0]
@@ -67,18 +67,9 @@ def coord():
         finally:
             pass
 
-    api_key = "5b3ce3597851110001cf624832cfe3428fcd436eac293a329bb4a384"
-    result2 = []
-    for i in range(int(len(result)/2)-1):
-        try:
-            client = openrouteservice.Client(key=api_key)
-            route = client.directions(coordinates=[(float(result[2 * i+1]), float(result[2 * i])) ,(float(result[2 * i+3]), float(result[2 * i + 2]))  ], profile='driving-car', format='geojson')
-            for one in route['features'][0]['geometry']['coordinates']:
-                result2.append(one)
-        finally:
-            pass
+    return result
 
-    return result2
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=4000)

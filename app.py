@@ -55,8 +55,6 @@ def locate():
             location = geolocator.geocode(p)
             result.append(str(location.latitude))
             result.append(str(location.longitude))
-            else:
-                pass
         finally:
             pass
 

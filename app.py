@@ -53,8 +53,9 @@ def locate():
         try:
             geolocator = Nominatim(user_agent="coordinate_finder")
             location = geolocator.geocode(p)
-            result.append(str(location.latitude))
-            result.append(str(location.longitude))
+            if location is not None:
+                result.append(str(location.latitude))
+                result.append(str(location.longitude))
         finally:
             pass
 

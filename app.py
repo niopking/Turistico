@@ -89,7 +89,7 @@ def coord():
     for i in range(int(len(result)/2)-1):
         try:
             client = openrouteservice.Client(key=api_key)
-            route = client.directions(coordinates=[(float(result[2 * i+1]), float(result[2 * i])) ,(float(result[2 * i+3]), float(result[2 * i + 2]))  ], profile='driving-car', format='geojson')
+            route = client.directions(coordinates=[(float(result[2 * i+1]), float(result[2 * i])) ,(float(result[2 * i+3]), float(result[2 * i + 2]))  ], profile='bike', format='geojson')
             for one in route['features'][0]['geometry']['coordinates']:
                 result2.append(one)
         finally:
